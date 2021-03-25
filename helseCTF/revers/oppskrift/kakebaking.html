@@ -1,0 +1,42 @@
+<html>
+  <head>
+    <title>Skallsjokkert webserver</title>	  
+    <meta charset="UTF-8" />
+  </head> 
+  
+<script>
+const stekeovn = s => {
+    const kutt = text => text.split('').map(c => c.charCodeAt(0));
+    const fordoy = n => ("0" + Number(n).toString(16)).substr(-2);
+    const krydre = krydder => kutt(s).reduce((a,b) => a ^ b, krydder);
+    
+    return s => s.split('')
+        .map(kutt)
+        .map(krydre)
+        .map(fordoy)
+        .join('');
+}
+
+var ingredienser = [
+  '290b0b091c0003010109',
+  '113b283e3f373537373f',
+  '43f764',
+  '07353820',
+  '586d78786d7a',
+  '163a2928322b3a35',
+  '1416162a1f30213e3d343e3f223a303a342c'
+]
+
+for(let i = 0; i < ingredienser.length; i++){
+  var steke = stekeovn(ingredienser[i-1] ? ingredienser[i-1] : 'noSaltToday') 
+  ingredienser[i] = steke(ingredienser[i])
+ 
+}
+
+console.log(ingredienser)
+</script>
+  <body>
+          <center><img alt="War-neuroses" src="/800px-War-neuroses._Wellcome_L0023554.jpg" width=300 height=386><br>
+                  Source: Wikipedia
+  </body>
+</html>

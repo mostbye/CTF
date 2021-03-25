@@ -1,0 +1,34 @@
+<html>
+<head><meta charset="utf-8"></head>
+<body>
+<canvas id="canvas" width="100" height="100" style="border: 1px solid #000;"></canvas>
+<script>
+    class R{constructor(t,i){this.d=v3nm(i),this.og=v3a(t,v3sc(this.d,1e-9))}IN(t){for(var i=!1,r=0;r<t.gm.length;r++){var e=t.gm[r].IN(this);e&&(!i||e.ds<i.ds)&&(i=e)}return i}il(t,i){for(var r=[0,0,0],e=0;e<i.lights.length;e++)r=v3a(r,lights[e].il(t,i));return[r[0],r[1],r[2],1]}render(t){var i=[0,0,0,0],r=this.IN(t);return r&&(i=this.il(r,t)),i}}class AmbientLight{constructor(t){this.cl=t}il(t,i){return v3m(t.tco,this.cl)}}class DirectionalLight{constructor(t,i){this.d=v3nm(t),this.cl=i}il(t,i){if(new R(t.ps,v3n(this.d)).IN(i))return[0,0,0];var r=v3sdp(v3n(this.d),t.nm);return v3m(t.tco,v3sc(this.cl,r))}}class I{constructor(t,i,r,e,s,n,h){this.ps=t,this.nm=i,this.ds=s,this.tcd=r,this.tco=e,this.ray=n,this.object=h}}class Egg{constructor(t,i,r,e,rotation){this.c=t,this.rd=i,this.ts=r,this.tx=e,this.eh=this.rd+this.rd*this.ts,this.rotation=rotation}ms(t,i){return[t[0],this.c[1]+(t[1]-this.c[1])*i,t[2]]}sc(t,i){return[t[0],t[1]*i,t[2]]}IN(t){return this.ih(t,1,t=>t<=0)||this.ih(t,this.ts,t=>t>0)}ih(t,i,r){var e=this.ms(t.og,1/i),s=this.sc(t.d,1/i),n=new R(e,s),h=v3s(n.og,this.c),o=v3l(h),a=v3sdp(n.d,h),c=a*a-(o*o-this.rd*this.rd);if(c>=0){var l=-a-Math.sqrt(c);if(l<0)return!1;var v=v3a(n.og,v3sc(n.d,l)),u=v3s(v,this.c);if(r(v[1]-this.c[1])){v=this.ms(v,i),u=v3nm(this.sc(u,i));var d=Math.acos(v3sdp(v3nm([u[0],0,u[2]]),[0,0,-1]));u[0]<0&&(d*=-1),d=(d+Math.PI)/(2*Math.PI);var g=[d+=this.rotation,(v[1]-this.c[1]+this.rd)/this.eh],m=this.tx.gt(g);return new I(v,u,g,m,l,t,this)}}return!1}}class Scene{constructor(t,i){this.gm=t,this.lights=i}}class Camera{constructor(t,i,r){this.width=t,this.height=i,this.fp=[0,30,-r]}render(t,i,r,e){t*=r,i*=r;for(var s=new Uint8ClampedArray(t*i*4),n=0;n<=i;n++)for(var h=0;h<=t;h++)for(var o=[-this.width/2+this.width/t*(h+.5),this.height/2-this.height/i*(n+.5),0],a=new R(this.fp,v3nm(v3s(o,this.fp))).render(e),c=0;c<4;c++)s[4*(n*t+h)+c]=255*a[c];t/=r,i/=r;var l=new Uint8ClampedArray(t*i*4);for(n=0;n<=i;n++)for(h=0;h<=t;h++){for(c=0;c<4;c++)var v=[0,0,0,0];for(var u=0,d=0;d<r;d++)for(var g=0;g<r;g++){if(s[4*((n*r+d)*t*r+h*r+g)+3]>0){u++;for(c=0;c<4;c++)v[c]+=s[4*((n*r+d)*t*r+h*r+g)+c]}}for(c=0;c<3;c++)l[4*(n*t+h)+c]=v[c]/u;l[4*(n*t+h)+3]=u/(r*r-1)*255}return new ImageData(l,t,i)}}function v3a(n,t){return[n[0]+t[0],n[1]+t[1],n[2]+t[2]]}function v3s(n,t){return[n[0]-t[0],n[1]-t[1],n[2]-t[2]]}function v3m(n,t){return[n[0]*t[0],n[1]*t[1],n[2]*t[2]]}function v3sc(n,t){return[n[0]*t,n[1]*t,n[2]*t]}function v3sdp(n,t){return n[0]*t[0]+n[1]*t[1]+n[2]*t[2]}function v3n(n){return[-n[0],-n[1],-n[2]]}function v3l(n){return Math.sqrt(n[0]*n[0]+n[1]*n[1]+n[2]*n[2])}function v3nm(n){return v3sc(n,1/v3l(n))}class ET{constructor(t){this.e=[.8,.8,.95],this.ts=t}gt(t){for(var s=0,h=0;h<this.ts.length;h++)s=this.ts[h].gt(t)||s;return s||this.e}}var Q=["9748817765047588943807863343369945880356542556596860688758263072537965818756132654588579088175"];class S{constructor(t,s,h){this.c=t,this.w=s,this.cl=h}gt(t){return Math.abs(t[1]-this.c)<this.w/2?this.cl:0}}Q.push("7563506383435335066303188461636955303163756885545325768946065268351826346463184339538354665305");class D{constructor(t,s,h,r,n,i){this.c=t,this.w=s,this.f=h,this.o=r,this.a=n,this.cl=i}gt(t){return Math.abs(t[1]-this.c)<this.w/2+Math.cos(t[0]*Math.PI*2*this.f)*this.a/2?this.cl:0}}Q.push("2186620158979867855599885937553458529968396863825508735960153903632433647683739681668684336384");class L{constructor(){}gt(t){var s=5-Math.floor((t[1]-.33)/.02),h=(80+Math.floor(150*t[0]))%150;return s>-1&&s<5&&h<94&&!(Q[s][h]>=3&&Q[s][h]%3!=1&&Q[s][h]<=8)?[.9,.5,.8]:0}}Q.push("2566813186062856036826135039533735528436550339576806068066958468567698808088980339888567565328");class Z{constructor(t,s){this.o=t,this.c=s}gt(t){var s=Math.cos((2*t[0]+this.o)*Math.PI*2);return Math.abs(t[1]-.4+.25*s/2)<.005?this.c:0}}function DSS(t,s,h,r){return new ET([new S(.5,.01,t),new S(.475,.01,t),new S(.45,.01,t),new S(.3,.01,t),new S(.325,.01,t),new S(.35,.01,t),new S(.4,.1,s),new D(.4,.03,10,0,.02,h),new D(.4,.02,10,0,.02,r)])}function CS(t){var s=[];for(i=0;i<10;i++)s.push(new Z(.1*i,t));return new ET(s)}function C(){var t=[.4,.8,.4],s=[.4,.4,.8],h=[.8,.8,.4],r=[.4,.75,.8],n=[.8,.4,.8],i=[CS(s),DSS(n,t,n,r),DSS(t,h,t,s),new ET([new S(.4,.2,s),new L]),DSS(r,t,s,h),CS(n)];return i[0].e=[.85,.8,.85],i[1].e=[.9,.7,.6],i[3].e=[.9,.8,.85],i[4].e=[.9,.7,.7],i}Q.push("9116379736429866718845138698633055378166145588235851636136283271682893508168895561213531565293");var textures=C();
+    
+    // Vi trenger noen påskeegg!
+    var geometry = [];
+    for (var i = 0; i < 5; i++) {
+        geometry.push(new Egg([16-i*10, -2, -33+i*13], 6, 1.40 + i*0.1 - (i%2)*0.2, textures[i % 5], 0.001));
+    }
+
+    // Uten lys er allting mørkt!
+    var lights = [
+        new DirectionalLight([-2.0, -3, 4], [0.35, 0.35, 0.35]),
+        new DirectionalLight([2.0, -3, 4], [0.35, 0.35, 0.35]),
+        new AmbientLight([0.6, 0.6, 0.6])
+    ];
+    var scene = new Scene(geometry, lights);
+    var camera = new Camera(65, 32, 200); // Bredde, høyde og brennvidde for kamera
+    var x_res = camera.width * 8; // Horisontal oppløsning
+    var y_res = camera.height * 8; // Vertikal oppløsning 
+    var antialiasing = 3; // 3x3 antialiasing FTW!
+
+    var image = camera.render(x_res, y_res, antialiasing, scene);
+    var canvas = document.getElementById('canvas');
+    canvas.width = x_res;
+    canvas.height = y_res;
+    var ctx = canvas.getContext('2d');
+    ctx.putImageData(image, 0, 0);
+</script>
+</body>
+</html>
