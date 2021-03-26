@@ -1,29 +1,41 @@
-import os
+# Mistet oppskrift
 
+JS scriptfungerer om man sender inn random bokstaver og endrer seg ikke ved AA bytt noen.
 
-def splitting(s, n):
-    cipher = s
-    cipher_split = []
-    for index in range(0, len(cipher), n):
-        cipher_split.append(cipher[index: index + n])
-    return cipher_split
+Sender inn alfanumeriske chars
 
+```
+var ingredienser = [
+  'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ _{}1234567890'
+]
 
-def lookuplist(plain, enc):
-    lookup = []
-    cipher_split = splitting(enc, 2)
-    plain_split = splitting(plain, 1)
-    for i in range(len(cipher_split)):
-        tmp = []
-        tmp.append(cipher_split[i])
-        tmp.append(plain_split[i])
-        lookup.append(tmp)
-    return lookup
+>>> 0d0e0f08090a0b04050607000102031c1d1e1f18191a1b1415162d2e2f28292a2b24252627202122233c3d3e3f38393a3b3435364c3317115d5e5f58595a5b54555c
+```
 
+Mapper man opp dette: a = 0d osv og erstater samme boksav
 
-def main():
-    cipher = ['290b0b091c0003010109', '113b283e3f373537373f', '43f764', '07353820', '586d78786d7a', '163a2928322b3a35', '1416162a1f30213e3d343e3f223a303a342c']
-    cipher = ['290b0b091c0003010109'] # Eggeplomme
+Psudo:
+```
+    lookup = lookuplist(plain, enc)
+    for ing in cipher:
+        cipher_arr = splitting(ing, 2)
+        decoded_arr = []
+        for item in cipher_arr:
+            for look in lookup:
+                if item in look:
+                    decoded_arr.append(look[1])
+        print(''.join(decoded_arr))
+```
+
+```
+$ python3 oppsk.py 
+Eggeplomme
+```
+
+Gjents for alle ingredienser, men ny enc for hver:
+
+```
+    #cipher = ['290b0b091c0003010109'] # Eggeplomme
     #cipher = ['113b283e3f373537373f'] # Kardemomme
     #cipher = ['43f764']  # Løk
     #cipher = ['07353820']  # Salt
@@ -32,9 +44,9 @@ def main():
     #cipher = ['1416162a1f30213e3d343e3f223a303a342c']  # EGG{Napoleonskake}
 
     ## First
-    plain = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ _{}1234567890"
+    #plain = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ _{}1234567890"
     # Plain alfa inn
-    enc = "0d0e0f08090a0b04050607000102031c1d1e1f18191a1b1415162d2e2f28292a2b24252627202122233c3d3e3f38393a3b3435364c3317115d5e5f58595a5b54555c"
+    #enc = "0d0e0f08090a0b04050607000102031c1d1e1f18191a1b1415162d2e2f28292a2b24252627202122233c3d3e3f38393a3b3435364c3317115d5e5f58595a5b54555c"
     # Eggemplomme from js
     #enc = "3b38393e3f3c3d32333031363734352a2b28292e2f2c2d2223201b18191e1f1c1d12131011161714150a0b08090e0f0c0d0203007a0521276b68696e6f6c6d62636a"
     # Kardemomme from js
@@ -47,17 +59,5 @@ def main():
     #enc = "3a39383f3e3d3c33323130373635342b2a29282f2e2d2c2322211a19181f1e1d1c13121110171615140b0a09080f0e0d0c0302017b0420266a69686f6e6d6c63626b"
     # Marsipan from js
     #enc = "3033323534373639383b3a3d3c3f3e212023222524272629282b1013121514171619181b1a1d1c1f1e010003020504070609080b710e2a2c60636265646766696861"
-
-    lookup = lookuplist(plain, enc)
-    for ing in cipher:
-        cipher_arr = splitting(ing, 2)
-        decoded_arr = []
-        for item in cipher_arr:
-            for look in lookup:
-                if item in look:
-                    decoded_arr.append(look[1])
-        print(''.join(decoded_arr))
-
-
-if __name__ == "__main__":
-    main()
+>>>> GET the egg
+```
